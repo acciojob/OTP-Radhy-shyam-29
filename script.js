@@ -14,20 +14,28 @@ container.addEventListener("input", function (e) {
     return;
   }
 
-  // Move to next input
+  // Move focus to next input
   if (index < inputs.length - 1) {
     inputs[index + 1].focus();
   }
 });
 
-// Backspace handling
+// Backspace handling (FULL correct logic)
 container.addEventListener("keydown", function (e) {
   if (!e.target.classList.contains("code")) return;
 
   const index = Array.from(inputs).indexOf(e.target);
 
   if (e.key === "Backspace") {
-    if (e.target.value === "" && index > 0) {
+
+    // CASE 1: If current has value → clear it only
+    if (e.target.value !== "") {
+      e.target.value = "";
+      return;
+    }
+
+    // CASE 2: If already empty → move to previous and clear
+    if (index > 0) {
       inputs[index - 1].value = "";
       inputs[index - 1].focus();
     }
