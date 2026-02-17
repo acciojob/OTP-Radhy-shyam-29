@@ -1,16 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let mainDiv = document.createElement("div");
+      mainDiv.id = "main-container";
+      document.body.append(mainDiv);
+      let heading = document.createElement("h1");
+      heading.innerText = "Verify Your Account";
+      heading.id = "verification_heading";
+      mainDiv.append(heading);
 
-<html>
+      let para = document.createElement("p");
+      para.id = "verification_subtext";
+      para.innerText = "OTP dalo yha par";
+      mainDiv.append(para);
 
-<head>
-	<link rel="stylesheet" href="styles.css">
-</head>
+      let otpdiv = document.createElement("div");
+      otpdiv.className = "code-container";
+      mainDiv.append(otpdiv);
 
-<body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+      for (let i = 0; i < 6; i++) {
+        let input = document.createElement("input");
+        input.className = "code";
+        input.type = "text";
+        input.maxLength = 1;
+        input.style.height = "50px";
+        input.style.width = "50px";
+        otpdiv.append(input);
+      }
 
-</body>
+      let select = document.querySelectorAll(".code");
+      otpdiv.addEventListener("input", (e) => {
+        if (e.target.matches(".code")) {
+          let indexStore = Array.from(select).indexOf(e.target);
 
+          if (
+            e.target.value.length == 1 &&
+            e.target.value >= "0" &&
+            e.target.value <= "9"
+          ) {
+            if (indexStore < select.length - 1) {
+              select[indexStore + 1].focus();
+            }
+          } else {
+            e.target.value = "";
+          }
+        }
+      });
+
+      otpdiv.addEventListener("keydown", (e) => {
+        if (e.target.matches(".code")) {
+          let indexStore = Array.from(select).indexOf(e.target);
+          if (e.key == "Backspace" && e.target.value == "" && indexStore > 0) {
+            select[indexStore - 1].focus();
+          }
+        }
+      });
+    </script>
+  </body>
 </html>
